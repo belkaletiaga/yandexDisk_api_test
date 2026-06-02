@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+
+    id('io.qameta.allure') version "3.1.0"
+}
+
+group = 'ru.Yandex'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    lombokVersion = '1.18.46'
+}
+
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Rest Assured
+    testImplementation 'io.rest-assured:rest-assured:6.0.0'
+
+    // Jackson (serialization / deserialization)
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
+    // Allure
+    testImplementation 'io.qameta.allure:allure-junit5:2.33.0'
+    implementation 'io.qameta.allure:allure-java-commons:2.33.0'
+    implementation 'io.qameta.allure:allure-rest-assured:2.34.0'
+
+    //Lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // AssertJ
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+
+    //OWNER
+    implementation 'org.aeonbits.owner:owner:1.0.12'
+}
+
+test {
+    useJUnitPlatform()
+    def token = System.getProperty("oauthToken")
+    if (token) {
+        systemProperty "oauthToken", token
+    }
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        showStandardStreams = true
+    }
+}
