@@ -43,7 +43,7 @@
 ```bash
 git clone https://github.com/belkaletiaga/yandexDisk.git 
 ```
-### 2. Установить токен :
+### 2. Установить токен
 
 Через файл src/test/resources/default.properties: 
 oauthToken=ваш_токен
